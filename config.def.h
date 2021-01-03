@@ -11,7 +11,7 @@ static const unsigned int gappov    = 20;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static const char StartupPath[]	    = "/home/adam/Documents/Scripts/Startup";
+static const char StartupPath[]	    = "/home/adam/Documents/Scripts/Fordsmand-Sh/Startup";
 static const char *fonts[]          = { "ttf: Noto Color Emoji:size=10" };
 static const char dmenufont[]       = "ttf: Noto Color Emoji:size=10";
 static char normbgcolor[]           = "#222222";
@@ -72,7 +72,13 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-i", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *lockcmd[]  = { "xsecurelock", NULL };
+static const char *volupcmd[]    = { "pamixer", "-i", "5", NULL };
+static const char *voldowncmd[]  = { "pamixer", "-d", "5", NULL };
+static const char *volmutecmd[]  = { "pamixer", "-t", NULL };
 static const char *emojicmd[] = { "~/.scripts/emoji", NULL };
+static const char *passmenucmd[] = { "passmenu", "--type", NULL };
+static const char *browsercmd[] = { "qutebrowser", NULL };
 
 
 /*
@@ -97,8 +103,9 @@ ResourcePref resources[] = {
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = passmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -132,7 +139,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
  	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
-    { MODKEY,                       XK_e,      spawn,          {.v = (const char*[]){ "/bin/sh", "-c", "~/.scripts/emoji", NULL } } },
+        { MODKEY,                       XK_e,      spawn,          {.v = (const char*[]){ "/bin/sh", "-c", "~/.scripts/emoji", NULL } } },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -140,6 +147,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
+	{ MODKEY,			XK_l,      spawn,          {.v = lockcmd } },
+	{ MODKEY,			XK_b,      spawn,          {.v = browsercmd } },
+	{ 0,				0x1008ff13,      spawn,    {.v = volupcmd } },
+	{ 0,				0x1008ff12,      spawn,    {.v = volmutecmd } },
+	{ 0,				0x1008ff11,      spawn,    {.v = voldowncmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
