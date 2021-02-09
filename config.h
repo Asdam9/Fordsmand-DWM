@@ -53,7 +53,7 @@ static const Layout layouts[] = {
  	{ "[@]",      spiral },
 	{ "[  ]=",      tile },    /* first entry is default */
 	{ "[M]",      monocle },
-    { "[\\\\]",     dwindle },
+        { "[\\\\]",     dwindle },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 };
 
@@ -72,13 +72,15 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-i", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *lockcmd[]  = { "xsecurelock", NULL };
+static const char *lockcmd[]  = { "slock", NULL };
 static const char *volupcmd[]    = { "pamixer", "-i", "5", NULL };
 static const char *voldowncmd[]  = { "pamixer", "-d", "5", NULL };
 static const char *volmutecmd[]  = { "pamixer", "-t", NULL };
 static const char *emojicmd[] = { "~/.scripts/emoji", NULL };
 static const char *passmenucmd[] = { "passmenu", "--type", NULL };
 static const char *browsercmd[] = { "qutebrowser", NULL };
+static const char *brightnessupcmd[] = { "xbacklight", "-inc", "10", NULL };
+static const char *brightnessdowncmd[] = { "xbacklight", "-dec", "10", NULL };
 
 
 /*
@@ -152,6 +154,8 @@ static Key keys[] = {
 	{ 0,				0x1008ff13,      spawn,    {.v = volupcmd } },
 	{ 0,				0x1008ff12,      spawn,    {.v = volmutecmd } },
 	{ 0,				0x1008ff11,      spawn,    {.v = voldowncmd } },
+        { 0,                            0x1008ff02,      spawn,    {.v = brightnessupcmd } },
+        { 0,                            0x1008ff03,      spawn,    {.v = brightnessdowncmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
